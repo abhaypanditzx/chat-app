@@ -33,43 +33,12 @@ io.on('connection', (socket) => {
 
 })
 
+app.get("/test", (req, res) => {
+    res.json({ message: "Server is working!" });
+});
 
 
 const PORT = process.env.PORT || 5000
 server.listen(PORT, () => {
     console.log(` server is running on port:${PORT} `)
 })
-// const express = require("express");
-// const http = require("http");
-// const cors = require("cors");
-// const { Server } = require("socket.io");
-
-// const app = express();
-// const server = http.createServer(app);
-
-// app.use(cors());
-
-// // Initialize Socket.io
-// const io = new Server(server, {
-//   cors: {
-//     origin: "http://localhost:3000", // React frontend
-//     methods: ["GET", "POST"],
-//   },
-// });
-
-// // Handle Socket.io Connections
-// io.on("connection", (socket) => {
-//   console.log(`User Connected: ${socket.id}`);
-
-//   socket.on("sendMessage", (data) => {
-//     io.emit("receiveMessage", data); // Broadcast message to all users
-//   });
-
-//   socket.on("disconnect", () => {
-//     console.log(`User Disconnected: ${socket.id}`);
-//   });
-// });
-
-// // Start the server
-// const PORT = 5000;
-// server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
