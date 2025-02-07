@@ -2,7 +2,11 @@
 import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
-const socket = io("https://chat-app-0v4m.onrender.com/");
+const socket = io("https://chat-app-0v4m.onrender.com", { 
+    transports: ["websocket", "polling"], 
+    withCredentials: true 
+});
+
 
 function Chat() {
   const [messages, setMessages] = useState([]);

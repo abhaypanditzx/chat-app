@@ -9,11 +9,13 @@ const server = http.createServer(app);
 app.use(cors());
 const io = new Server(server, {
     cors: {
-        origin: '*',
-        methods: ['POST' , 'GET'],
-        allowedHeaders: ['Content-Type'],
+        origin: "https://chat-app-ten-liard.vercel.app", // Vercel frontend URL
+        methods: ["GET", "POST"],
+        allowedHeaders: ["Content-Type"],
+        credentials: true  // Allows authentication cookies if needed
     }
-})
+});
+
 io.on('connection', (socket) => {
     console.log('user connected:', socket.id)
 
