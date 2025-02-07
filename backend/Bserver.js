@@ -9,7 +9,7 @@ const server = http.createServer(app);
 app.use(cors());
 const io = new Server(server, {
     cors: {
-        origin: 'https://chat-app-ten-liard.vercel.app',
+        origin: '*',
         methods: ['POST' , 'GET'],
         allowedHeaders: ['Content-Type'],
     }
