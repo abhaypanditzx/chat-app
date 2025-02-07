@@ -9,8 +9,9 @@ const server = http.createServer(app);
 app.use(cors());
 const io = new Server(server, {
     cors: {
-        origin: 'https://chat-app-ten-liard.vercel.app/',
+        origin: 'https://chat-app-ten-liard.vercel.app',
         methods: ['POST' , 'GET'],
+        allowedHeaders: ['Content-Type'],
     }
 })
 io.on('connection', (socket) => {
@@ -20,6 +21,7 @@ io.on('connection', (socket) => {
     socket.on('sendMessage',(data) => {
         // const messageData = { ID: socket.id,text: data }
         // console.log(`${messageData.ID}: ${messageData.text}`)
+        console.log(data)
         io.emit('receiveMessage',data)
     })
     
