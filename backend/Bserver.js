@@ -1,46 +1,46 @@
-const express = require('express');
-const http = require("http")
-const cors = require('cors');
-const { Server } = require('socket.io');
-require('dotenv').config();
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+const dotenv = require("dotenv");
+
+dotenv.config();
+
 const app = express();
-app.use(express.json());
 const server = http.createServer(app);
-app.use(cors());
+
 const io = new Server(server, {
     cors: {
-        origin: "https://chat-app-ten-liard.vercel.app", // Vercel frontend URL
+        origin: process.env.CLIENT_URL || "https://chat-app-ten-liard.vercel.app", // Change dynamically
         methods: ["GET", "POST"],
         allowedHeaders: ["Content-Type"],
-        credentials: true  // Allows authentication cookies if needed
+        credentials: true,
     }
 });
 
-io.on('connection', (socket) => {
-    console.log('user connected:', socket.id)
+io.on("connection", (socket) => {
+    console.log(`[${new Date().toLocaleTimeString()}] User connected: ${socket.id}`);
 
-    // message
-    socket.on('sendMessage',(data) => {
-        // const messageData = { ID: socket.id,text: data }
-        // console.log(`${messageData.ID}: ${messageData.text}`)
-        console.log(data)
-        io.emit('receiveMessage',data)
-    })
-    
+    // Handle incoming messages
+    socket.on("sendMessage", (data) => {
+        console.log(`[${new Date().toLocaleTimeString()}] Message received from ${data.username}: ${data.message}`);
 
-    // disconnect
-    socket.on('disconnect',()=>{
-        console.log("user disconnected")
-    })
+        // Broadcast message to all except the sender
+        socket.broadcast.emit("receiveMessage", data);
+    });
 
-})
+    // Handle disconnection
+    socket.on("disconnect", () => {
+        console.log(`[${new Date().toLocaleTimeString()}] User disconnected: ${socket.id}`);
+    });
+});
 
+// Health check route
 app.get("/test", (req, res) => {
     res.json({ message: "Server is working!" });
 });
 
-
-const PORT = process.env.PORT || 5000
+// Start server
+const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
-    console.log(` server is running on port:${PORT} `)
-})
+    console.log(`🚀 Server is running on port: ${PORT}`);
+});
