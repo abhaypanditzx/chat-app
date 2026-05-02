@@ -10,8 +10,8 @@ export default function Home() {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    const newSocket = io("https://chat-app-1-dx36.onrender.com/");
-    // const newSocket = io("http://localhost:5000");
+    // const newSocket = io("https://chat-app-1-dx36.onrender.com/");
+    const newSocket = io("http://localhost:5000");
     setSocket(newSocket);
     newSocket.on("r-msg", (msg) => {
       setChat((prev) => [...prev, msg]);
@@ -46,16 +46,19 @@ export default function Home() {
         ))}
       </div>
 
-    <div className=" absolute bottom-4 left-4 flex ">
+    <form 
+    onSubmit={(e)=>sendMessage()}
+    className="  w-full md:w-[70%]  left-4 flex mt-2 ">
         <input
         value={message}
+        onKeyDown={(e)=>e.key==="Enter" && sendMessage()}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type..."
-        className="w-full border rounded-l-2xl"
+        className="w-full border rounded-l-2xl p-2"
       />
 
-      <button onClick={sendMessage}>Send</button>
-    </div>
+      <button type="submit" className="border w-fit px-6 py-3 text-white bg-black">Send</button>
+    </form>
     </div>
   );
 }
