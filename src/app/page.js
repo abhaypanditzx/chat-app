@@ -9,7 +9,7 @@ export default function Home() {
   const [chat, setChat] = useState([]);
 
   useEffect(() => {
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("https://chat-app-1-dx36.onrender.com/");
     console.log(newSocket)
     setSocket(newSocket);
     newSocket.on("receive-message", (msg) => {
