@@ -15,8 +15,8 @@ export default function Home() {
     if (storedUsername) {
       setUsername(storedUsername);
     }
-    // const newSocket = io("https://chat-app-1-dx36.onrender.com/");
-    const newSocket = io("http://localhost:5000");
+    const newSocket = io("https://chat-app-1-dx36.onrender.com/");
+    // const newSocket = io("http://localhost:5000");
     setSocket(newSocket);
     newSocket.on("r-msg", (msg) => {
       setChat((prev) => [...prev, msg]);
