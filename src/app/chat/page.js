@@ -90,9 +90,9 @@ export default function Home() {
       <div className="overflow-y-scroll hide-scrollbar bg-[url('/bg.jpg')] bg-cover  bg-no-repeat py-6 border border-black  bg-white rounded-md h-[400px] ">
       
         {chat?.map((msg, i) => (
-        <div key={i} className="w-full relative z-10 p-4">
+        <div key={i} className="w-full relative z-10 px-4 py-2">
             <p
-            className={`w-fit mb-2 mx-2  py-2 p-1 rounded-lg   ${msg.senderId === socket.id ? "ml-auto bg-pink-400 border border-gray-400 text-white" : "bg-white text-black border border-gray-400  "}`}
+            className={`w-fit p-1 rounded-lg ${msg.senderId === socket.id ? "ml-auto bg-pink-400 border border-gray-400 text-white" : "bg-white text-black border border-gray-400  "}`}
             key={i}
           >
             <span className=" font-semibold">{msg.username}:</span>
