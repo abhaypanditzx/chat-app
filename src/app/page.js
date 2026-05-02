@@ -1,64 +1,24 @@
-"use client";
-
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
-
-export default function Home() {
-  const [socket, setSocket] = useState(null);
-  const [username, setUsername] = useState("");
-  const [message, setMessage] = useState("");
-  const [chat, setChat] = useState([]);
-
-  useEffect(() => {
-    const newSocket = io("https://chat-app-1-dx36.onrender.com/");
-    // const newSocket = io("http://localhost:5000");
-    setSocket(newSocket);
-    newSocket.on("r-msg", (msg) => {
-      setChat((prev) => [...prev, msg]);
-    });
-
-    return () => newSocket.disconnect();
-  }, []);
-
-  const sendMessage = () => {
-    if (socket && message) {
-      socket.emit("s-msg",{username:username,message:message,senderId:socket.id});
-      setMessage("");
-    }
-  };
-
+"use client"
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+const page = () => {
+  const router = useRouter();
+  const [username,setUsername] = useState("")
+  
+  const handleUser = ()=>{
+    if(!username) return;
+    localStorage.setItem("username",username);
+    router.push("/chat");
+  }
   return (
-    <div style={{ padding: 20 }} className=" flex flex-col h-screen w-full" >
-      <h1 className="text-center text-2xl font-bold mb-4">Next Chat 💬</h1>
-      <input type="text" 
-      value={username} 
-      onChange={(e)=>setUsername(e.target.value)} 
-      placeholder="Enter your username"
-      className="border-black border rounded-lg bg-amber-50  mb-3 p-2"/>
-      <div
-     
-        className="overflow-y-scroll  py-6 border border-black rounded-md h-[400px] "
-      >
-        {chat?.map((msg, i) => (
-          <p className={` w-fit mb-2  mx-2 px-6  rounded-lg text-white p-2 ${msg.senderId ===socket.id ? "ml-auto bg-green-500" : "bg-pink-500  "}`} key={i}>
-          <span className=" font-semibold">{msg.username}:</span>{msg.message}
-          </p>
-        ))}
-      </div>
-
-    <form 
-    onSubmit={(e)=>sendMessage()}
-    className="  w-full md:w-[70%]  left-4 flex mt-2 ">
-        <input
-        value={message}
-        onKeyDown={(e)=>e.key==="Enter" && sendMessage()}
-        onChange={(e) => setMessage(e.target.value)}
-        placeholder="Type..."
-        className="w-full border rounded-l-2xl p-2"
-      />
-
-      <button type="submit" className="border w-fit px-6 py-3 text-white bg-black">Send</button>
-    </form>
+    <div  className='flex justify-center flex-col items-center h-screen w-full '>
+     <div className='bg-slate-200 p-10 shadow-lg rounded-lg flex flex-col gap-4 '>
+       <h2 className='text-center text-3xl font-bold mb-3'>Join the chat</h2>
+       <input type="text" value={username} onChange={(e)=>setUsername(e.target.value)} placeholder='enter your Username' className='bg-white rounded-lg placeholder-gray-600 p-2' />
+      <button onClick={handleUser} className='bg-green-500 cursor-pointer hover:bg-green-600 p-2 text-white rounded-lg'>Enter chat</button>
+     </div>
     </div>
-  );
+  )
 }
+
+export default page
