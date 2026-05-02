@@ -2,7 +2,6 @@
 import { useEffect, useState, useRef } from "react";
 import io from "socket.io-client";
 import { useRouter } from "next/navigation";
-
 export default function Home() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
@@ -20,6 +19,11 @@ export default function Home() {
     setSocket(newSocket);
     newSocket.on("r-msg", (msg) => {
       setChat((prev) => [...prev, msg]);
+    if(msg.senderId!==newSocket.id) {
+    const audio =   new Audio("/notification.mp3");
+    audio.play();
+    }
+
     });
 
     return () => newSocket.disconnect();
@@ -37,7 +41,6 @@ export default function Home() {
 
   const sendMessage = (e) => {
     e.preventDefault();
-
     if (socket && message && username) {
       socket.emit("s-msg", {
         username: username,
