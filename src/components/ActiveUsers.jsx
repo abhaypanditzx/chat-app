@@ -10,10 +10,10 @@ const ActiveUsers = ({ activeUser }) => {
         {activeUser?.map((user, index) => (
           <h2
             key={index}
-            className="text-xl font-semibold rounded-lg py-2 relative  border-pink-400 border  hover:scale-105 transition-all cursor-pointer text-pink-600 h-fit w-full px-2 "
+            className="text-xl font-semibold rounded-lg py-2 relative bg-white  border-pink-400 border hover:shadow-md transition-all cursor-pointer text-pink-600 h-fit w-full px-2 "
           >
             {user}
-            <div className="p-1 bg-green-500 rounded-full h-3 w-3 absolute top-0 right-0 "></div>
+            {/* <div className="p-1 bg-green-500 rounded-full h-3 w-3 absolute top-0 right-0 "></div> */}
           </h2>
         ))}
       </div>
