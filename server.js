@@ -8,12 +8,23 @@ const server = http.createServer(app);
     cors:"*"
  })
 
-
- io.on("connection",(socket)=>{
+const users = {};
+io.on("connection",(socket)=>{
     console.log("user connected:",socket.id);
+    socket.on("join",(username)=>{
+      users[socket.id]=username;
+      io.emit("active-users",Object.values(users))
+    })
     socket.on("s-msg",(msg)=>{
         console.log(msg);
         io.emit("r-msg",msg);
+    })
+
+
+    socket.on("disconnect",()=>{
+      console.log("user disconnected",socket.id);
+      delete users[socket.id];
+      io.emit("active-users",Object.values(users))
     })
  })
 const PORT = 5000;
