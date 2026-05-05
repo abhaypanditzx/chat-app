@@ -1,9 +1,11 @@
 "use client";
 import paw from "@/assets/paw.png";
+import { useDarkMode } from "@/context/DarkMode";
 import Image from "next/image";
-const SendMessage = ({socket,username,message, setMessage }) => {
 
-      const sendMessage = (e) => {
+const SendMessage = ({ socket, username, message, setMessage }) => {
+  const { mode, ThemeMode } = useDarkMode();
+  const sendMessage = (e) => {
     e.preventDefault();
     if (socket && message && username) {
       socket.emit("s-msg", {
@@ -15,25 +17,38 @@ const SendMessage = ({socket,username,message, setMessage }) => {
     }
   };
   return (
-      <form
-          onSubmit={sendMessage}
-          className="  w-full md:w-[70%]  left-4 flex mt-2 "
+    <form
+      onSubmit={sendMessage}
+      className={`w-[90%] my-4 h-[50px]  mx-4 md:w-[65%] ${mode === "dark" ? ThemeMode?.dark?.cardColor + " border border-white/10 rounded-2xl shadow-md shadow-black/30" : ThemeMode?.light?.cardColor + " border border-gray-400 rounded-2xl shadow-md shadow-gray-300"} flex `}
+    >
+      <input
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        placeholder="Type..."
+        className="w-full border  border-none outline-none bg-transparent p-2 text-gray-200 placeholder-gray-400"
+      />
+
+      <button
+        type="submit"
+        className="w-fit px-6 py-3 cursor-pointer rounded-r-2xl  text-white bg-blue-600"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className="size-6"
         >
-          <input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type..."
-            className="w-full border bg-white p-2"
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5"
           />
+        </svg>
+      </button>
+    </form>
+  );
+};
 
-          <button
-            type="submit"
-            className="border w-fit px-6 py-3 cursor-pointer text-white bg-black"
-          >
-            <Image src={paw} alt="paw" width={25} height={25} />
-          </button>
-        </form>
-  )
-}
-
-export default SendMessage
+export default SendMessage;

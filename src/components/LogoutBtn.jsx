@@ -1,7 +1,9 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useDarkMode } from "@/context/DarkMode";
 const LogoutBtn = () => {
   const router = useRouter();
+  const {mode,ThemeMode} = useDarkMode();
   const handleLogout = () => {
     localStorage.removeItem("username");
     router.push("/");
@@ -9,7 +11,7 @@ const LogoutBtn = () => {
   return (
     <button
       onClick={handleLogout}
-      className="bg-red-600 hover:bg-red-500 p-1 cursor-pointer rounded-md px-2 text-white font-semibold"
+      className={`${mode=="dark" ? ThemeMode?.dark?.fontColor : ThemeMode?.light?.fontColor} ${mode=="dark" ? ThemeMode?.dark?.cardColor : ThemeMode?.light?.cardColor}  p-1 cursor-pointer rounded-md px-2  font-semibold`}
     >
       logout
     </button>

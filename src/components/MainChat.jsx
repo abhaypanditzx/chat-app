@@ -1,22 +1,26 @@
-import React from 'react'
+import React from "react";
+import { useDarkMode } from "@/context/DarkMode";
 
-const MainChat = ({chat,socket,chatEndRef}) => {
+const MainChat = ({ chat, socket, chatEndRef }) => {
+  const {mode,ThemeMode} = useDarkMode();
   return (
-  <div className="overflow-y-scroll hide-scrollbar bg-[url('/bg.jpg')] bg-cover  bg-no-repeat py-6 border border-black  bg-white rounded-md h-[600px] ">
-          {chat?.map((msg, i) => (
-            <div key={i} className="w-full relative z-10 px-4 py-2">
-              <p
-                className={`w-fit p-1 rounded-lg ${msg.senderId === socket.id ? "ml-auto bg-pink-400 border border-gray-400 text-white" : "bg-white text-black border border-gray-400  "}`}
-                key={i}
-              >
-                <span className=" font-semibold">{msg.username}:</span>
-                <span>{msg.message}</span>
-              </p>
-            </div>
-          ))}
-          <div ref={chatEndRef} />
+    <div
+      className={`${mode =="dark" ? "bg-slate-950" : ThemeMode?.light?.bgColor} overflow-y-scroll hide-scrollbar py-6 h-[400px] sm:h-[450px]`}
+    >
+      {chat?.map((msg, i) => (
+        <div key={i} className="w-full relative mt-2 px-4   z-10 ">
+          <p
+            className={`w-fit px-4 py-2  rounded-lg ${msg.senderId === socket.id ? "ml-auto bg-blue-600  text-white" : "bg-white text-gray-600 border  "}`}
+            key={i}
+          >
+            <span className=" font-semibold">{msg.username}:</span>
+            <span>{msg.message}</span>
+          </p>
         </div>
-  )
-}
+      ))}
+      <div ref={chatEndRef} />
+    </div>
+  );
+};
 
-export default MainChat
+export default MainChat;
