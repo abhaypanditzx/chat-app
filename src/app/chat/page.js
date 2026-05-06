@@ -6,27 +6,27 @@ import MainChat from "@/components/MainChat";
 import SendMessage from "@/components/SendMessage";
 import Nav from "@/components/Nav";
 import { useDarkMode } from "@/context/DarkMode";
+import toast from "react-hot-toast";
 export default function Home() {
   const [socket, setSocket] = useState(null);
   const [message, setMessage] = useState("");
   const [chat, setChat] = useState([]);
   const [activeUser, setActiveUser] = useState([]);
   const [socketId, setSocketId] = useState("");
-  const [username, setUsername] = useState("");
   const [activeUserLoading, setActiveUserLoading] = useState(true);
   const chatEndRef = useRef(null);
-  const { mode, ThemeMode } = useDarkMode();
-
+  const { mode, ThemeMode,username } = useDarkMode();
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
     // const newSocket = io("http://localhost:5000");
     const newSocket = io("https://chat-app-1-dx36.onrender.com/");
-    if (storedUsername) {
-      newSocket.emit("join", storedUsername);
+    if (username) {
+      newSocket.emit("join", username);
+      newSocket.on("user-joined",(username)=>{
+        toast.success(`${username} joined the chat`);  
+      })
+      newSocket.on("user-disconnected",(username)=>{
+        toast.error(`${username} left the chat`);  
+      })
       newSocket.on("active-users", (users) => {
         setActiveUserLoading(false);
         setActiveUser(users);
@@ -42,8 +42,8 @@ export default function Home() {
       if (msg.senderId !== socketId) {
       }
     });
-    return () => newSocket.disconnect();
-  }, []);
+    return () => newSocket.disconnect(username);
+  }, [username]);
 
   useEffect(() => {
     if (chatEndRef.current) {

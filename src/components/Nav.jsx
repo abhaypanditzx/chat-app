@@ -22,7 +22,7 @@ const Nav = ({ activeUser, username, ThemeMode }) => {
         </div>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-x-4">
         <button
           onClick={() => handleMode()}
           className={`${mode == "dark" ? ThemeMode?.dark?.cardColor + " " + ThemeMode?.dark?.fontColor : ThemeMode?.light?.cardColor + " " + ThemeMode?.light?.fontColor} rounded-lg p-1 text-xs sm:p-2 sm:text-base font-semibold hover:cursor-pointer transition-colors duration-300 `}

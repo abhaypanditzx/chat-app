@@ -5,11 +5,15 @@ const DarkModeContext = createContext();
 
 const DarkModeContextProvider = ({ children }) => {
   const [mode, setMode] = useState("light");
-
+  const [username, setUsername] = useState("");
   useEffect(()=>{
       const saved = localStorage.getItem("theme") || "light";
       setMode(saved);
+      const storedUsername = localStorage.getItem("username");
 
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
 },[])
 
 
@@ -29,7 +33,7 @@ const ThemeMode = {
 
   };
   return (
-    <DarkModeContext.Provider value={{ mode, setMode, ThemeMode}}>
+    <DarkModeContext.Provider value={{ mode, setMode, ThemeMode,username,setUsername}}>
       {children}
     </DarkModeContext.Provider>
   );

@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useDarkMode } from '@/context/DarkMode'
 const page = () => {
   const router = useRouter();
-  const [username,setUsername] = useState("")
-  
+  const {username,setUsername} = useDarkMode();
   const handleUser = ()=>{
     if(!username) return;
     localStorage.setItem("username",username);

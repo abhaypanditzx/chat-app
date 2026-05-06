@@ -11,7 +11,7 @@ const LogoutBtn = () => {
   return (
     <button
       onClick={handleLogout}
-      className={`${mode == "dark" ? ThemeMode?.dark?.fontColor : ThemeMode?.light?.fontColor} ${mode == "dark" ? ThemeMode?.dark?.cardColor : ThemeMode?.light?.cardColor} p-2 rounded-md cursor-pointer  transition-colors duration-300  font-semibold`}
+      className={` px-4 py-3 rounded-md bg-white hover:bg-gray-200 text-red-500 hover:text-red-600  font-bold cursor-pointer  transition-colors duration-300  `}
     >
       <svg
         width="20px"
