@@ -15,18 +15,26 @@ export default function Home() {
   const [socketId, setSocketId] = useState("");
   const [activeUserLoading, setActiveUserLoading] = useState(true);
   const chatEndRef = useRef(null);
-  const { mode, ThemeMode,username } = useDarkMode();
+  const { mode, ThemeMode, username } = useDarkMode();
   useEffect(() => {
     // const newSocket = io("http://localhost:5000");
     const newSocket = io("https://chat-app-1-dx36.onrender.com/");
     if (username) {
       newSocket.emit("join", username);
-      newSocket.on("user-joined",(username)=>{
-        toast.success(`${username} joined the chat`);  
-      })
-      newSocket.on("user-disconnected",(username)=>{
-        toast.error(`${username} left the chat`);  
-      })
+      newSocket.on("user-joined", (username) => {
+        if (username === localStorage.getItem("username")) {
+          toast.success(`You are Connected with Others`);
+        } else {
+          toast.success(`${username} joined the chat`);
+        }
+      });
+      newSocket.on("user-disconnected", (username) => {
+        if (username === localStorage.getItem("username")) {
+          toast.error(`You are Disconnected with Others`);
+        } else {
+          toast.error(`${username} left the chat`);
+        }
+      });
       newSocket.on("active-users", (users) => {
         setActiveUserLoading(false);
         setActiveUser(users);
@@ -39,8 +47,6 @@ export default function Home() {
     setSocket(newSocket);
     newSocket.on("r-msg", (msg) => {
       setChat((prev) => [...prev, msg]);
-      if (msg.senderId !== socketId) {
-      }
     });
     return () => newSocket.disconnect(username);
   }, [username]);
@@ -69,7 +75,7 @@ export default function Home() {
           username={username}
         />
 
-<div className="flex flex-col w-full h-full relative overflow-hidden min-h-0">
+        <div className="flex flex-col w-full h-full relative overflow-hidden min-h-0">
           <MainChat
             ThemeMode={ThemeMode}
             chat={chat}
@@ -82,7 +88,7 @@ export default function Home() {
             message={message}
             setMessage={setMessage}
           />
-   </div>
+        </div>
       </div>
     </div>
   );
