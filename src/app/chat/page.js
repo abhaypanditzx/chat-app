@@ -40,8 +40,6 @@ export default function Home() {
     newSocket.on("r-msg", (msg) => {
       setChat((prev) => [...prev, msg]);
       if (msg.senderId !== socketId) {
-        // const audio = new Audio("/notification.mp3");
-        // audio.play();
       }
     });
     return () => newSocket.disconnect();
@@ -63,7 +61,7 @@ export default function Home() {
         activeUserLoading={activeUserLoading}
       />
       <div
-        className={` flex flex-col relative max-h-[600px] shadow-lg w-full rounded-lg ${mode === "dark" ? ThemeMode?.dark?.bgColor : ThemeMode?.light?.bgColor} `}
+        className={` flex flex-col relative shadow-lg w-full rounded-lg ${mode === "dark" ? ThemeMode?.dark?.bgColor : ThemeMode?.light?.bgColor} `}
       >
         <Nav
           ThemeMode={ThemeMode}
@@ -71,18 +69,20 @@ export default function Home() {
           username={username}
         />
 
-        <MainChat
-          ThemeMode={ThemeMode}
-          chat={chat}
-          socket={socket}
-          chatEndRef={chatEndRef}
-        />
-        <SendMessage
-          socket={socket}
-          username={username}
-          message={message}
-          setMessage={setMessage}
-        />
+<div className="flex flex-col w-full h-full relative overflow-hidden min-h-0">
+          <MainChat
+            ThemeMode={ThemeMode}
+            chat={chat}
+            socket={socket}
+            chatEndRef={chatEndRef}
+          />
+          <SendMessage
+            socket={socket}
+            username={username}
+            message={message}
+            setMessage={setMessage}
+          />
+   </div>
       </div>
     </div>
   );

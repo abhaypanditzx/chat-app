@@ -5,7 +5,7 @@ const MainChat = ({ chat, socket, chatEndRef }) => {
   const { mode, ThemeMode } = useDarkMode();
   return (
     <div
-      className={`${mode == "dark" ? "bg-slate-950" : ThemeMode?.light?.bgColor} overflow-y-scroll hide-scrollbar py-6 h-full sm:h-[450px]`}
+      className={`${mode == "dark" ? "bg-slate-950" : ThemeMode?.light?.bgColor} pb-24 overflow-y-scroll hide-scrollbar py-6 flex-1 `}
     >
       {chat?.map((msg, i) => (
         <div key={i} className="w-full relative mt-2 px-4   z-10 ">
