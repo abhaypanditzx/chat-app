@@ -25,7 +25,7 @@ const SendMessage = ({ socket, username, message, setMessage }) => {
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type..."
-        className="w-full border  border-none outline-none bg-transparent p-2 text-gray-200 placeholder-gray-400"
+        className={`${mode === "dark" ? ThemeMode?.dark?.fontColor : ThemeMode?.light?.fontColor} w-full border  border-none outline-none bg-transparent p-2  placeholder-gray-400`}
       />
 
       <button

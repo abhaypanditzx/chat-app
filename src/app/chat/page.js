@@ -13,10 +13,10 @@ export default function Home() {
   const [activeUser, setActiveUser] = useState([]);
   const [socketId, setSocketId] = useState("");
   const [username, setUsername] = useState("");
-  const [activeUserLoading,setActiveUserLoading] = useState(true);
+  const [activeUserLoading, setActiveUserLoading] = useState(true);
   const chatEndRef = useRef(null);
-  const {mode,ThemeMode} = useDarkMode();
-  
+  const { mode, ThemeMode } = useDarkMode();
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
 
@@ -28,7 +28,7 @@ export default function Home() {
     if (storedUsername) {
       newSocket.emit("join", storedUsername);
       newSocket.on("active-users", (users) => {
-        setActiveUserLoading(false)
+        setActiveUserLoading(false);
         setActiveUser(users);
       });
     }
@@ -54,14 +54,29 @@ export default function Home() {
   }, [chat]);
 
   return (
-    <div className={`flex  gap-x-6 h-screen w-full ${mode==="dark" ? "bg-[#0e1013]": "bg-[#f0f4f8]"} p-0 sm:p-4`}>
-      <ActiveUsers ThemeMode={ThemeMode}  activeUser={activeUser} activeUserLoading={activeUserLoading} />
+    <div
+      className={`flex  gap-x-6 h-screen w-full ${mode === "dark" ? "bg-[#0e1013]" : "bg-[#f0f4f8]"} p-0 sm:p-4`}
+    >
+      <ActiveUsers
+        ThemeMode={ThemeMode}
+        activeUser={activeUser}
+        activeUserLoading={activeUserLoading}
+      />
       <div
-        className={` flex flex-col relative max-h-[600px] shadow-lg w-full rounded-lg ${mode==="dark" ? ThemeMode?.dark?.bgColor: ThemeMode?.light?.bgColor} `}
+        className={` flex flex-col relative max-h-[600px] shadow-lg w-full rounded-lg ${mode === "dark" ? ThemeMode?.dark?.bgColor : ThemeMode?.light?.bgColor} `}
       >
-        <Nav  ThemeMode={ThemeMode}  activeUser={activeUser} username={username} />
+        <Nav
+          ThemeMode={ThemeMode}
+          activeUser={activeUser}
+          username={username}
+        />
 
-        <MainChat ThemeMode={ThemeMode} chat={chat} socket={socket} chatEndRef={chatEndRef} />
+        <MainChat
+          ThemeMode={ThemeMode}
+          chat={chat}
+          socket={socket}
+          chatEndRef={chatEndRef}
+        />
         <SendMessage
           socket={socket}
           username={username}

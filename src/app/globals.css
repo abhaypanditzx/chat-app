@@ -1,26 +1,23 @@
 @import "tailwindcss";
-.hide-scrollbar::-webkit-scrollbar{
-display:none;
-};
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
 
 @keyframes animate-shine {
-    0%{
-      transform:translateX(0px);
-  background-color: rgba(156, 163, 175, 0.575);
-
-    }
-    100%{
-      transform:translateX(300px);
-  background-color: rgba(156, 163, 175, 0.575);
-
-    }
+  0% {
+    transform: translateX(0px);
+    background-color: rgba(156, 163, 175, 0.575);
+  }
+  100% {
+    transform: translateX(300px);
+    background-color: rgba(156, 163, 175, 0.575);
+  }
 }
-.animate-shine{
-  animation:animate-shine 4s linear infinite;
-  filter:blur(15px);
+.animate-shine {
+  animation: animate-shine 4s linear infinite;
+  filter: blur(15px);
   opacity: 0.4;
 }
-
 
 /* dark mode  */
 /* 25282d */
